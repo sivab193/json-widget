@@ -1,0 +1,55 @@
+# Google Play Store Listing & Compliance Package
+
+Use the following metadata and declarations when submitting **App Notify** (`dev.sivab.appnotify`) in the Google Play Console.
+
+---
+
+## 1. Store Listing Copy
+
+### App Name (Max 30 characters)
+`App Notify: JSON Widgets & Live`
+
+### Short Description (Max 80 characters)
+`Glanceable HTTPS JSON widgets & live notifications with API key auth & low battery`
+
+### Full Description (Max 4000 characters)
+Turn any public or authenticated HTTPS JSON endpoint into glanceable information across your Android Home screen, Lock screen, and companion wearables.
+
+App Notify is built for developers, self-hosters, and power users who want real-time visibility into custom APIs, status endpoints, transit feeds, delivery countdowns, or schedules—without draining battery or relying on third-party cloud relays.
+
+KEY FEATURES
+• Public & Authenticated Endpoints: Connect public HTTPS JSON endpoints or authenticate securely using Bearer Tokens (`Authorization: Bearer`) or custom API Key headers (such as `X-API-Key`).
+• Responsive Home & Lock Screen Widgets: Pin multiple widgets, each mapped to its own feed. Automatically adapts between compact cards, 3-column data tables, and live chronometer countdowns.
+• Live Lock-Screen Updates: Start an on-demand Live Session with promoted ongoing notification support and one-tap "Refresh Now" or "Stop Live" controls right from the notification shade.
+• Wearable Mirroring: Dedicated alert channel designed for smartbands and wearables (including Galaxy Fit), triggering only when payload data actually changes.
+• Built-In Offline Samples: Preview transit arrivals, live food delivery countdowns, daily meetings, and family location tables immediately out of the box.
+
+ENGINEERED FOR BATTERY LIFE
+• Configurable Sync Intervals: Choose Manual-only (zero background polling), 15 minutes, 30 minutes, 1 hour, 3 hours, or 6 hours.
+• Non-Wakeup Inexact Scheduling: Uses Android's `ELAPSED_REALTIME` inexact batching so background refreshes wait for natural device maintenance windows instead of waking the CPU from deep Doze sleep.
+• HTTP ETag & 304 Caching: Sends `If-None-Match` and `If-Modified-Since` headers to avoid re-downloading and re-parsing unchanged JSON payloads.
+• Battery Saver & Data Saver Aware: Automatically pauses background polling whenever Android Battery Saver or Data Saver is active.
+
+PRIVACY & SECURITY FIRST
+• Zero Tracking: No analytics SDKs, no ads, and no intermediary servers.
+• On-Device Credentials: API keys and Bearer tokens stay in private local storage (`allowBackup="false"`) and are transmitted strictly over TLS/HTTPS to your configured URL.
+
+---
+
+## 2. Google Play Data Safety Questionnaire
+
+- **Does your app collect or share any of the required user data types?**  
+  **No.** All endpoint URLs, API keys/tokens, and cached JSON payloads remain strictly on the user's device and are only sent directly to the user-configured HTTPS endpoint.
+- **Is all user data encrypted in transit?**  
+  **Yes** (`android:usesCleartextTraffic="false"` enforces HTTPS/TLS).
+- **Can users delete their stored credentials/data?**  
+  **Yes**, via the in-app **Clear token** button or Android system app storage settings.
+
+---
+
+## 3. Foreground Service (`specialUse`) Play Console Declaration
+
+- **Foreground Service Type:** `specialUse`
+- **Subtype Property:** `user_initiated_live_json_endpoint_monitor_and_countdown`
+- **Play Console Justification Text:**
+  > App Notify allows users to explicitly start a live monitoring session ("Apply & Sync Live") for a user-configured HTTPS JSON endpoint or live delivery countdown, displaying an ongoing promoted status notification on the lock screen and companion wearable. The foreground service is strictly user-initiated from the main activity when "Display Live Update on Lock screen & Galaxy Fit" is enabled, uses system chronometers and user-selected intervals to minimize battery usage, and provides a prominent "Stop Live" action button both inside the ongoing notification and inside the app UI to terminate the service immediately.

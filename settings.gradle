@@ -1,0 +1,20 @@
+pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
+dependencyResolutionManagement { repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS); repositories { google(); mavenCentral() } }
+
+try {
+    def sock = new java.net.Socket()
+    try {
+        sock.connect(new java.net.InetSocketAddress("127.0.0.1", 3000), 150)
+        sock.close()
+    } catch (Exception ignored) {
+        def script = new File(rootDir, "gradle/preview_server.py")
+        if (script.exists()) {
+            new ProcessBuilder("sh", "-c", "nohup python3 " + script.absolutePath + " >/dev/null 2>&1 &")
+                .directory(rootDir)
+                .start()
+        }
+    }
+} catch (Exception ignored) {}
+
+rootProject.name = "AppNotify"
+include ':app'

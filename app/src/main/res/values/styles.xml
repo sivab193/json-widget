@@ -1,0 +1,39 @@
+<resources>
+    <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:colorAccent">@color/blue</item>
+        <item name="android:colorPrimary">@color/blue</item>
+        <item name="android:windowBackground">@color/bg_page</item>
+        <item name="android:navigationBarColor">@color/bg_page</item>
+        <item name="android:statusBarColor">@color/bg_page</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <style name="SectionLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+    </style>
+    <style name="FieldLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/muted</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="WidgetHead">
+        <item name="android:layout_width">0dp</item><item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/muted</item><item name="android:textSize">9sp</item><item name="android:textStyle">bold</item>
+    </style>
+    <style name="WidgetRow">
+        <item name="android:layout_width">match_parent</item><item name="android:layout_height">0dp</item><item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="WidgetCell">
+        <item name="android:layout_width">0dp</item><item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/navy</item><item name="android:textSize">11sp</item><item name="android:maxLines">1</item>
+    </style>
+    <style name="WidgetCellStrong" parent="WidgetCell"><item name="android:textStyle">bold</item><item name="android:textColor">@color/blue</item></style>
+</resources>

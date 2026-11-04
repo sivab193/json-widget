@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_page"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- App Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="App Notify"
+                    android:textColor="@color/navy"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Authenticated JSON feeds for widgets, lock screen &amp; wearables"
+                    android:textColor="@color/muted"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/liveBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/badge_bg"
+                android:text="READY"
+                android:textColor="@color/blue"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- CARD 1: Data Source & Endpoint Authentication -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/SectionLabel"
+                android:text="1 · DATA SOURCE &amp; AUTHENTICATION" />
+
+            <TextView
+                style="@style/FieldLabel"
+                android:layout_marginTop="12dp"
+                android:text="Selected Feed" />
+
+            <Spinner
+                android:id="@+id/source"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/input_bg"
+                android:contentDescription="Select JSON data source" />
+
+            <!-- Custom Endpoint Container -->
+            <LinearLayout
+                android:id="@+id/endpointContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/urlLabel"
+                    style="@style/FieldLabel"
+                    android:layout_marginTop="14dp"
+                    android:text="HTTPS JSON Endpoint URL" />
+
+                <EditText
+                    android:id="@+id/url"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/input_bg"
+                    android:hint="https://api.example.com/v1/status"
+                    android:importantForAutofill="no"
+                    android:inputType="textUri"
+                    android:singleLine="true"
+                    android:textColor="@color/navy"
+                    android:textColorHint="@color/muted"
+                    android:textSize="14sp" />
+
+                <TextView
+                    style="@style/FieldLabel"
+                    android:layout_marginTop="14dp"
+                    android:text="Endpoint Authentication" />
+
+                <Spinner
+                    android:id="@+id/authMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/input_bg"
+                    android:contentDescription="Select endpoint authentication method" />
+
+                <!-- Custom Header Name (shown only for API Key Header mode) -->
+                <LinearLayout
+                    android:id="@+id/authHeaderContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/FieldLabel"
+                        android:layout_marginTop="12dp"
+                        android:text="Header Name" />
+
+                    <EditText
+                        android:id="@+id/authHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/input_bg"
+                        android:hint="X-API-Key"
+                        android:importantForAutofill="no"
+                        android:inputType="textNoSuggestions"
+                        android:singleLine="true"
+                        android:textColor="@color/navy"
+                        android:textColorHint="@color/muted"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Secret / Bearer Token / API Key value -->
+                <LinearLayout
+                    android:id="@+id/authSecretContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/authSecretLabel"
+                            style="@style/FieldLabel"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="Bearer Token / API Key" />
+
+                        <TextView
+                            android:id="@+id/clearAuth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="4dp"
+                            android:text="Clear token"
+                            android:textColor="@color/danger"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/authSecret"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/input_bg"
+                        android:fontFamily="monospace"
+                        android:hint="Paste token or key (transmitted over HTTPS only)"
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword|textNoSuggestions"
+                        android:singleLine="true"
+                        android:textColor="@color/navy"
+                        android:textColorHint="@color/muted"
+                        android:textSize="13sp" />
+
+                    <CheckBox
+                        android:id="@+id/revealSecret"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="Show API key / token characters"
+                        android:textColor="@color/muted"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- CARD 2: Background Sync Frequency & Battery Optimization -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/SectionLabel"
+                android:text="2 · REFRESH FREQUENCY &amp; BATTERY SAVER" />
+
+            <TextView
+                style="@style/FieldLabel"
+                android:layout_marginTop="12dp"
+                android:text="Background API Call Interval" />
+
+            <Spinner
+                android:id="@+id/refreshInterval"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/input_bg"
+                android:contentDescription="Select background refresh interval" />
+
+            <CheckBox
+                android:id="@+id/batteryRespectPowerSave"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:text="Pause background sync during Battery Saver or Data Saver"
+                android:textColor="@color/navy"
+                android:textSize="13sp" />
+
+            <CheckBox
+                android:id="@+id/batteryNotifyOnlyDiff"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Alert wearables &amp; shade only when JSON payload changes"
+                android:textColor="@color/navy"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/batteryStatusSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Battery optimization: Inexact non-wakeup alarms + HTTP ETag / 304 caching active."
+                android:textColor="@color/muted"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- CARD 3: Glanceable Surfaces & Actions -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/SectionLabel"
+                android:text="3 · SURFACES &amp; LIVE CONTROLS" />
+
+            <CheckBox
+                android:id="@+id/showWidget"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:text="Display feed on Home &amp; Lock-screen widgets"
+                android:textColor="@color/navy"
+                android:textSize="14sp" />
+
+            <CheckBox
+                android:id="@+id/showNotification"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Display Live Update on Lock screen &amp; Galaxy Fit"
+                android:textColor="@color/navy"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_primary"
+                    android:text="Apply &amp; Sync Live"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/stopLive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/btn_secondary"
+                    android:text="Stop Live"
+                    android:textAllCaps="false"
+                    android:textColor="@color/danger"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addWidget"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_secondary"
+                android:text="Pin Selected Feed Widget to Home Screen"
+                android:textAllCaps="false"
+                android:textColor="@color/navy"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/testNotification"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_secondary"
+                    android:text="Test Wearable Alert"
+                    android:textAllCaps="false"
+                    android:textColor="@color/navy"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/notificationSettings"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_secondary"
+                    android:text="Now Bar / Channels"
+                    android:textAllCaps="false"
+                    android:textColor="@color/navy"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- CARD 4: Live Payload Preview -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/SectionLabel"
+                android:text="4 · LIVE PAYLOAD &amp; DIAGNOSTICS" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Ready"
+                android:textColor="@color/navy"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/authDiagnostic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Auth: Public HTTPS · Schedule: 30 min (inexact)"
+                android:textColor="@color/muted"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/panel"
+                android:fontFamily="monospace"
+                android:text="Tap Apply &amp; Sync Live to load data."
+                android:textColor="@color/navy"
+                android:textIsSelectable="true"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- CARD 5: Play Store Privacy & Data Safety -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/SectionLabel"
+                android:text="5 · PRIVACY, SECURITY &amp; PLAY STORE INFO" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Credentials stay exclusively on-device in private storage, are never logged, and only transmit over TLS/HTTPS to your configured endpoint."
+                android:textColor="@color/muted"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/privacyInfoBtn"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_secondary"
+                android:text="View Privacy Policy &amp; Data Safety Details"
+                android:textAllCaps="false"
+                android:textColor="@color/blue"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

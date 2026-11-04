@@ -1,0 +1,22 @@
+# Android Studio / IntelliJ
+.idea/
+*.iml
+
+# Local SDK configuration
+local.properties
+.android-sdk/
+
+# Gradle and build outputs
+.gradle/
+**/build/
+
+# Signing and secrets
+*.jks
+*.keystore
+keystore.properties
+
+# OS and generated files
+.DS_Store
+*.apk
+*.aab
+captures/

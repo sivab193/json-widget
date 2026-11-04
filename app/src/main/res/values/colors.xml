@@ -1,0 +1,16 @@
+<resources>
+    <color name="bg_page">#F8FAFC</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="surface_subtle">#F1F5F9</color>
+    <color name="border_subtle">#E2E8F0</color>
+    <color name="navy">#0F172A</color>
+    <color name="blue">#2563EB</color>
+    <color name="blue_dark">#1D4ED8</color>
+    <color name="pale_blue">#EFF6FF</color>
+    <color name="muted">#64748B</color>
+    <color name="success">#059669</color>
+    <color name="success_bg">#ECFDF5</color>
+    <color name="warning">#D97706</color>
+    <color name="danger">#DC2626</color>
+    <color name="white">#FFFFFF</color>
+</resources>
