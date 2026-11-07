@@ -1,4 +1,4 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import android.content.Context;
 import org.json.JSONArray;
@@ -12,7 +12,6 @@ final class ContentRenderer {
                 case "buses": return "ROUTE " + root.optString("route");
                 case "food_delivery": return "FOOD DELIVERY";
                 case "events": return "EVENTS";
-                case "family_locations": return "FAMILY LOCATIONS";
             }
         } catch (Exception ignored) { }
         return "PUBLIC ENDPOINT";
@@ -29,10 +28,6 @@ final class ContentRenderer {
             if ("events".equals(type)) {
                 JSONObject event = root.getJSONArray("events").getJSONObject(0);
                 return event.optString("time") + "\n" + event.optString("title");
-            }
-            if ("family_locations".equals(type)) {
-                JSONObject person = root.getJSONArray("people").getJSONObject(0);
-                return person.optString("name") + "\n" + person.optString("location");
             }
         } catch (Exception ignored) { }
         return JsonFormatter.summary(formatted);
@@ -57,14 +52,6 @@ final class ContentRenderer {
                 for (int i = 0; i < items.length(); i++) {
                     JSONObject event = items.getJSONObject(i);
                     out.append("\n").append(event.optString("time")).append(" · ").append(event.optString("title"));
-                }
-                return out.toString();
-            }
-            if ("family_locations".equals(type)) {
-                StringBuilder out = new StringBuilder("Family locations"); JSONArray items = root.getJSONArray("people");
-                for (int i = 0; i < items.length(); i++) {
-                    JSONObject person = items.getJSONObject(i);
-                    out.append("\n").append(person.optString("name")).append(" · ").append(person.optString("location")).append(" · ").append(person.optString("updated"));
                 }
                 return out.toString();
             }

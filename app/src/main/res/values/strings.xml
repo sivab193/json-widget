@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App Notify</string>
-    <string name="configure_widget_title">Configure App Notify Widget</string>
+    <string name="app_name">PeekJson</string>
+    <string name="configure_widget_title">Configure PeekJson Widget</string>
     <string name="widget_description">Glanceable JSON endpoint data with battery-aware background sync</string>
 </resources>

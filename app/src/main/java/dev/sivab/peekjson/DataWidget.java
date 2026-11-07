@@ -1,4 +1,4 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -33,7 +33,7 @@ public class DataWidget extends AppWidgetProvider {
     }
     @Override public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if ("dev.sivab.appnotify.REFRESH".equals(intent.getAction())) {
+        if ("dev.sivab.peekjson.REFRESH".equals(intent.getAction())) {
             int id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
             String mapped = id == AppWidgetManager.INVALID_APPWIDGET_ID ? Store.source(context) : Store.prefs(context).getString("widget_source_" + id, Store.source(context));
             if (id != AppWidgetManager.INVALID_APPWIDGET_ID) Store.setWidgetUpdated(context, id, now());
@@ -53,7 +53,7 @@ public class DataWidget extends AppWidgetProvider {
         Bundle options = manager.getAppWidgetOptions(id);
         int width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 250);
         int height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 150);
-        boolean compact = width < 180 || height < 120;
+        boolean compact = width < 110 || height < 80;
         String mappedSource = Store.prefs(context).getString("widget_source_" + id, Store.source(context));
         String stored = Store.text(context);
         String sample = Samples.json(mappedSource);
@@ -65,7 +65,7 @@ public class DataWidget extends AppWidgetProvider {
                 : "Hidden\nOpen the app to change visibility";
         boolean visible = Store.showWidget(context, mappedSource);
         boolean deliveryLayout = visible && !compact && Samples.FOOD.equals(mappedSource) && Store.foodDeadline(context) > 0;
-        boolean rowsLayout = visible && !compact && (Samples.BUSES.equals(mappedSource) || Samples.EVENTS.equals(mappedSource) || Samples.FAMILY.equals(mappedSource));
+        boolean rowsLayout = visible && !compact && (Samples.BUSES.equals(mappedSource) || Samples.EVENTS.equals(mappedSource));
         int layout = deliveryLayout ? R.layout.widget_delivery : (rowsLayout ? R.layout.widget_rows : R.layout.widget);
         RemoteViews views = new RemoteViews(context.getPackageName(), layout);
         views.setTextViewText(R.id.widgetTitle, ContentRenderer.title(stored));
@@ -88,7 +88,7 @@ public class DataWidget extends AppWidgetProvider {
         }
         views.setViewVisibility(R.id.widgetUpdated, compact ? View.GONE : View.VISIBLE);
         views.setTextViewText(R.id.widgetUpdated, "Updated " + Store.widgetUpdated(context, id) + "  ·  Tap to refresh");
-        Intent refresh = new Intent(context, DataWidget.class).setAction("dev.sivab.appnotify.REFRESH")
+        Intent refresh = new Intent(context, DataWidget.class).setAction("dev.sivab.peekjson.REFRESH")
                 .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id);
         PendingIntent pending = PendingIntent.getBroadcast(context, id, refresh, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.widgetRoot, pending);
@@ -105,19 +105,12 @@ public class DataWidget extends AppWidgetProvider {
                     JSONObject item = items.getJSONObject(i);
                     setRow(views, i + 1, item.optInt("minutes") + " min", item.optString("destination"), item.optString("status"));
                 }
-            } else if (Samples.EVENTS.equals(source)) {
+            } else {
                 views.setTextViewText(R.id.headLeft, "TIME"); views.setTextViewText(R.id.headMain, "EVENT"); views.setTextViewText(R.id.headRight, "PLACE");
                 items = root.getJSONArray("events");
                 for (int i = 0; i < Math.min(3, items.length()); i++) {
                     JSONObject item = items.getJSONObject(i);
                     setRow(views, i + 1, item.optString("time"), item.optString("title"), item.optString("location"));
-                }
-            } else {
-                views.setTextViewText(R.id.headLeft, "PERSON"); views.setTextViewText(R.id.headMain, "LOCATION"); views.setTextViewText(R.id.headRight, "UPDATED");
-                items = root.getJSONArray("people");
-                for (int i = 0; i < Math.min(3, items.length()); i++) {
-                    JSONObject item = items.getJSONObject(i);
-                    setRow(views, i + 1, item.optString("name"), item.optString("location"), item.optString("updated"));
                 }
             }
             views.setViewVisibility(R.id.row3, View.VISIBLE);

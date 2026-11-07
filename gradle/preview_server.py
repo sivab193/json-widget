@@ -13,7 +13,7 @@ HTML_PAGE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>App Notify — Android Preview & APK</title>
+  <title>PeekJson — Android Preview & APK</title>
   <style>
     :root {
       --bg-page: #F8FAFC;
@@ -247,7 +247,7 @@ HTML_PAGE = """<!DOCTYPE html>
     <div class="phone-frame">
       <div class="header-row">
         <div>
-          <h1>App Notify</h1>
+          <h1>PeekJson</h1>
           <div class="subtitle">Authenticated JSON feeds for widgets, lock screen &amp; wearables</div>
         </div>
         <span id="liveBadge" class="badge">STANDBY</span>
@@ -262,7 +262,6 @@ HTML_PAGE = """<!DOCTYPE html>
           <option value="buses">Route 21 · Upcoming Transit Buses</option>
           <option value="food">Food Delivery · Live Chronometer Countdown</option>
           <option value="events">Upcoming Events &amp; Meetings</option>
-          <option value="family">Family Locations · Widget-Only Table</option>
         </select>
 
         <div id="endpointContainer">
@@ -347,7 +346,7 @@ HTML_PAGE = """<!DOCTYPE html>
         <div class="header-row">
           <div>
             <div class="section-label" style="margin-bottom:4px;">NATIVE ANDROID APK BUILD</div>
-            <div style="font-weight:700;font-size:15px;">dev.sivab.appnotify · v1.1.0 (API 26–36)</div>
+            <div style="font-weight:700;font-size:15px;">dev.sivab.peekjson · v1.2.0 (API 26–36)</div>
             <div class="meta-text">Compiled with Gradle &amp; signed for installation</div>
           </div>
           <a href="/download/app-debug.apk" class="apk-btn btn-primary" style="flex:0 0 auto;">Download APK</a>
@@ -367,7 +366,7 @@ HTML_PAGE = """<!DOCTYPE html>
         <div class="section-label">LOCK-SCREEN LIVE UPDATE &amp; WEARABLE PREVIEW</div>
         <div class="widget-preview" style="border-radius:14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
-            <span id="notifTitle" style="font-size:12px;font-weight:700;color:var(--blue);">App Notify · Live</span>
+            <span id="notifTitle" style="font-size:12px;font-weight:700;color:var(--blue);">PeekJson · Live</span>
             <span style="font-size:11px;color:var(--muted);">VISIBILITY_PUBLIC · Promoted</span>
           </div>
           <div id="notifBody" style="margin-top:6px;font-size:13px;">Standby — tap Apply &amp; Sync Live to start foreground session.</div>
@@ -431,15 +430,7 @@ HTML_PAGE = """<!DOCTYPE html>
         events: [
           { title: "Product stand-up", time: "9:30 AM", location: "Zoom" },
           { title: "Dentist appointment", time: "1:15 PM", location: "Carmel" },
-          { title: "Dinner with family", time: "6:30 PM", location: "Home" }
-        ]
-      },
-      family: {
-        type: "family_locations",
-        people: [
-          { name: "Appa", location: "Hosur", updated: "Just now" },
-          { name: "Amma", location: "Madurai", updated: "2 min ago" },
-          { name: "Shuk", location: "Coimbatore", updated: "5 min ago" }
+          { title: "Dinner with friends", time: "6:30 PM", location: "Downtown" }
         ]
       }
     };
@@ -473,12 +464,7 @@ HTML_PAGE = """<!DOCTYPE html>
     function updateUIControls() {
       const src = sourceEl.value;
       document.getElementById("endpointContainer").style.display = src === "endpoint" ? "block" : "none";
-      if (src === "family") {
-        showNotificationEl.checked = false;
-        showNotificationEl.disabled = true;
-      } else {
-        showNotificationEl.disabled = false;
-      }
+      showNotificationEl.disabled = false;
 
       const mode = authModeEl.value;
       document.getElementById("authHeaderContainer").style.display = mode === "api_key" ? "block" : "none";
@@ -543,10 +529,6 @@ HTML_PAGE = """<!DOCTYPE html>
           title = "EVENTS";
           wBody = "Today\n" + obj.events.map(e => `${e.time} · ${e.title} (${e.location})`).join("\n");
           nBody = `${obj.events[0].time} · ${obj.events[0].title} · ${obj.events[0].location}`;
-        } else if (obj.type === "family_locations") {
-          title = "FAMILY LOCATIONS";
-          wBody = obj.people.map(p => `${p.name} · ${p.location} · ${p.updated}`).join("\n");
-          nBody = "Widget-only feed (Live notification disabled by default)";
         }
       } catch (_) {}
 
@@ -687,7 +669,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
             req = urllib.request.Request(target_url, headers={
                 "Accept": "application/json",
-                "User-Agent": "AppNotify/1.1 (Android; BatteryOptimized)"
+                "User-Agent": "PeekJson/1.2 (Android; BatteryOptimized)"
             })
             auth_mode = payload.get("authMode", "none")
             secret = (payload.get("authSecret") or "").strip()

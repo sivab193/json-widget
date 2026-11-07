@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Choose the JSON feed for this widget instance. Each App Notify widget on your Home or Lock screen maintains its own mapping."
+            android:text="Choose the JSON feed for this widget instance. Each PeekJson widget on your Home or Lock screen maintains its own mapping."
             android:textColor="@color/muted"
             android:textSize="14sp" />
 
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Uses global authentication and battery-aware refresh schedule configured in App Notify."
+                android:text="Uses global authentication and battery-aware refresh schedule configured in PeekJson."
                 android:textColor="@color/muted"
                 android:textSize="12sp" />
 

@@ -1,4 +1,4 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;

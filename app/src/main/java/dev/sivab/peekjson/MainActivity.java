@@ -1,4 +1,4 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import android.Manifest;
 import android.app.Activity;
@@ -309,7 +309,7 @@ public class MainActivity extends Activity {
     private void addSelectedWidget() {
         AppWidgetManager manager = AppWidgetManager.getInstance(this);
         if (!manager.isRequestPinAppWidgetSupported()) {
-            Toast.makeText(this, "Your launcher does not support pinning widgets from an app. Add App Notify from the Home-screen widget picker.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Your launcher does not support pinning widgets from an app. Add PeekJson from the Home-screen widget picker.", Toast.LENGTH_LONG).show();
             return;
         }
         String selected = Samples.IDS[source.getSelectedItemPosition()];
@@ -329,9 +329,8 @@ public class MainActivity extends Activity {
         endpointContainer.setVisibility(isCustomEndpoint ? View.VISIBLE : View.GONE);
 
         showWidget.setChecked(Store.prefs(this).getBoolean("widget_" + selected, true));
-        boolean allowNotify = !Samples.FAMILY.equals(selected);
-        showNotification.setEnabled(allowNotify);
-        showNotification.setChecked(allowNotify && Store.prefs(this).getBoolean("notify_" + selected, true));
+        showNotification.setEnabled(true);
+        showNotification.setChecked(Store.prefs(this).getBoolean("notify_" + selected, true));
         showNotification.setText(Store.supportsPromotedLiveUpdate(selected)
                 ? "Track as a Live Update on lock screen and supported system surfaces"
                 : "Send a standard lock-screen and wearable notification");

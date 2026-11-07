@@ -1,4 +1,4 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -66,7 +66,7 @@ final class Notifier {
                 new Intent(context, MainActivity.class),
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
         );
-        String title = test ? "App Notify · Test Alert" : ContentRenderer.title(Store.text(context));
+        String title = test ? "PeekJson · Test Alert" : ContentRenderer.title(Store.text(context));
         boolean liveEligible = !test && Store.supportsPromotedLiveUpdate(Store.source(context));
 
         Notification publicVersion = new Notification.Builder(context, CHANNEL)

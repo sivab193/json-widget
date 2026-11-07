@@ -1,15 +1,15 @@
-# Privacy Policy for App Notify
+# Privacy Policy for PeekJson
 
 **Effective Date:** November 2, 2026  
-**Package Name:** `dev.sivab.appnotify`
+**Package Name:** `dev.sivab.peekjson`
 
 ## 1. Overview
 
-App Notify ("the App") is a client-side utility that fetches JSON data from user-configured HTTPS endpoints or built-in offline sample feeds and displays the formatted summary on Android Home-screen widgets, Lock-screen notifications, and paired companion wearables.
+PeekJson ("the App") is a client-side utility that fetches JSON data from user-configured HTTPS endpoints or built-in offline sample feeds and displays the formatted summary on Android Home-screen widgets, Lock-screen notifications, and paired companion wearables.
 
 ## 2. Data We Collect and Store
 
-App Notify operates entirely on your device and does **not** operate any backend servers, analytics SDKs, advertising networks, or telemetry trackers.
+PeekJson operates entirely on your device and does **not** operate any backend servers, analytics SDKs, advertising networks, or telemetry trackers.
 
 - **Endpoint URLs & Preferences**: The HTTPS URL, selected feed type, and refresh interval you configure are stored locally on your device in private application preferences (`Context.MODE_PRIVATE`).
 - **Authentication Credentials (Bearer Tokens & API Keys)**: If you configure an authenticated endpoint using a Bearer Token or custom API Key header, that credential is stored locally on your device (`Context.MODE_PRIVATE`) with Android Auto Backup disabled (`android:allowBackup="false"`). Your credentials are only transmitted over encrypted HTTPS (`TLS`) directly to the endpoint URL you specify. You can permanently delete stored credentials at any time using the **Clear token** button in the App or by clearing app storage.

@@ -5,7 +5,7 @@
 - [x] Target and compile Android API 36.
 - [x] Request promoted ongoing notifications only for active transit and delivery sessions.
 - [x] Provide explicit Refresh and Stop actions and automatically end sample sessions.
-- [x] Keep arbitrary JSON, events, and family locations out of promoted Live Updates.
+- [x] Keep arbitrary JSON and events out of promoted Live Updates.
 - [x] Build a fresh-clone debug APK without a repository-local debug keystore.
 - [x] Load release signing credentials only from environment variables.
 - [x] Disable backup and device transfer for credentials and cached payloads.
@@ -16,7 +16,7 @@
 
 ## Play Console
 
-- [ ] Create the app with package `dev.sivab.appnotify` and enable Play App Signing.
+- [ ] Create the app with package `dev.sivab.peekjson` and enable Play App Signing.
 - [ ] Host `PRIVACY_POLICY.md` as a public HTTPS webpage and add the actual developer/support contact.
 - [ ] Complete Data Safety, ads, content rating, target audience, and app-access declarations.
 - [ ] Declare `specialUse` foreground service for time-bounded, user-initiated transit/delivery tracking.

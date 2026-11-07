@@ -16,5 +16,5 @@ try {
     }
 } catch (Exception ignored) {}
 
-rootProject.name = "AppNotify"
+rootProject.name = "PeekJson"
 include ':app'

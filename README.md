@@ -1,6 +1,6 @@
-# App Notify
+# PeekJson
 
-App Notify is a lightweight native Android application that turns public or authenticated HTTPS JSON endpoints into glanceable Home-screen widgets, lock-screen notifications, and wearable alerts. User-started active transit and delivery sessions can request Android 16 promoted Live Update treatment on supported devices.
+PeekJson is a lightweight native Android application that turns public or authenticated HTTPS JSON endpoints into glanceable Home-screen widgets, lock-screen notifications, and wearable alerts. User-started active transit and delivery sessions can request Android 16 promoted Live Update treatment on supported devices.
 
 Built with zero third-party runtime dependencies using standard Android platform APIs.
 
@@ -32,7 +32,6 @@ Built with zero third-party runtime dependencies using standard Android platform
 | Active Route 21 bus tracking | Yes | Yes | Requested on Android 16+ |
 | Active food delivery | Yes | Yes | Requested on Android 16+ |
 | Upcoming events | Yes | Yes | No |
-| Family locations | Yes | No | No |
 | Arbitrary HTTPS JSON | Yes | Yes | No by default |
 
 Promoted Live Updates are intended for ongoing, user-initiated, time-sensitive activity. Samsung Now Bar placement and wearable mirroring remain controlled by the phone, One UI, Galaxy Wearable settings, and the user.
@@ -54,10 +53,10 @@ For a minified Play Store release build, configure your release signing key and 
 The repository never stores signing secrets. Configure a Play upload key through environment variables:
 
 ```sh
-export APP_NOTIFY_KEYSTORE=/absolute/path/to/upload-key.jks
-export APP_NOTIFY_KEYSTORE_PASSWORD='your-store-password'
-export APP_NOTIFY_KEY_ALIAS='upload'
-export APP_NOTIFY_KEY_PASSWORD='your-key-password'
+export PEEKJSON_KEYSTORE=/absolute/path/to/upload-key.jks
+export PEEKJSON_KEYSTORE_PASSWORD='your-store-password'
+export PEEKJSON_KEY_ALIAS='upload'
+export PEEKJSON_KEY_PASSWORD='your-key-password'
 ./gradlew bundleRelease
 ```
 
@@ -71,4 +70,4 @@ Without those four variables, Gradle intentionally produces an unsigned release 
 4. Lock the phone to view the changing ETA. Android 16+ may promote it to the top lock-screen/status surface.
 5. Use **Refresh Now** or **Stop Live** from the notification. The demo ends automatically when the bus arrives.
 
-Galaxy Fit receives the latest rendered summary through Android notification mirroring. Enable App Notify in Galaxy Wearable → Notifications. A new wearable update replaces the previous app alert.
+Galaxy Fit receives the latest rendered summary through Android notification mirroring. Enable PeekJson in Galaxy Wearable → Notifications. A new wearable update replaces the previous app alert.

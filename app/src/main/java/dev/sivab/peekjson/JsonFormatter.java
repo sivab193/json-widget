@@ -1,4 +1,4 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import org.json.JSONArray;
 import org.json.JSONException;

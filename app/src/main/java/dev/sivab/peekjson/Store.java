@@ -1,10 +1,10 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 final class Store {
-    private static final String PREFS = "app_notify";
+    private static final String PREFS = "peekjson";
     static final String DEFAULT_URL = "https://jsonplaceholder.typicode.com/todos/1";
 
     static final String AUTH_NONE = "none";
@@ -133,7 +133,7 @@ final class Store {
 
     static boolean showNotification(Context c) {
         String source = source(c);
-        return prefs(c).getBoolean("notify_" + source, !Samples.FAMILY.equals(source));
+        return prefs(c).getBoolean("notify_" + source, true);
     }
 
     static String text(Context c) {

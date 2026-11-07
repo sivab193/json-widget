@@ -2,6 +2,8 @@
 
 ## 1.2.0
 
+- Renamed the app, Gradle project, Java namespace, and Android package to PeekJson (`dev.sivab.peekjson`).
+- Removed the family-location sample and all personal names from application and preview data.
 - Added a time-bounded Route 21 active bus-tracking demo with a changing ETA.
 - Restricted promoted Live Update requests to user-started active transit and food-delivery sessions.
 - Added automatic session completion plus notification actions for Refresh and Stop.

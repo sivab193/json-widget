@@ -1,4 +1,4 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -71,7 +71,7 @@ final class Fetcher {
                     connection.setReadTimeout(10000);
                     connection.setUseCaches(true);
                     connection.setRequestProperty("Accept", "application/json");
-                    connection.setRequestProperty("User-Agent", "AppNotify/1.1 (Android; BatteryOptimized)");
+                    connection.setRequestProperty("User-Agent", "PeekJson/1.2 (Android; BatteryOptimized)");
 
                     // Attach authentication header if configured
                     String authMode = Store.authMode(app);

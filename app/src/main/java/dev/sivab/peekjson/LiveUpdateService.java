@@ -1,4 +1,4 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import android.app.Service;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.os.IBinder;
 import android.os.Looper;
 
 public class LiveUpdateService extends Service {
-    static final String ACTION_STOP = "dev.sivab.appnotify.STOP_LIVE";
-    static final String ACTION_REFRESH = "dev.sivab.appnotify.REFRESH_LIVE";
+    static final String ACTION_STOP = "dev.sivab.peekjson.STOP_LIVE";
+    static final String ACTION_REFRESH = "dev.sivab.peekjson.REFRESH_LIVE";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private String lastDeliveredSummary = "";

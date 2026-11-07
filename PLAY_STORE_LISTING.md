@@ -1,13 +1,13 @@
 # Google Play Store Listing & Compliance Package
 
-Use the following metadata and declarations when submitting **App Notify** (`dev.sivab.appnotify`) in the Google Play Console.
+Use the following metadata and declarations when submitting **PeekJson** (`dev.sivab.peekjson`) in the Google Play Console.
 
 ---
 
 ## 1. Store Listing Copy
 
 ### App Name (Max 30 characters)
-`App Notify: JSON Widgets & Live`
+`PeekJson: JSON Widgets & Live`
 
 ### Short Description (Max 80 characters)
 `Glanceable HTTPS JSON widgets & live notifications with API key auth & low battery`
@@ -15,14 +15,14 @@ Use the following metadata and declarations when submitting **App Notify** (`dev
 ### Full Description (Max 4000 characters)
 Turn public or authenticated HTTPS JSON endpoints into glanceable information across your Android Home screen, lock-screen notifications, and companion wearables.
 
-App Notify is built for developers, self-hosters, and power users who want real-time visibility into custom APIs, status endpoints, transit feeds, delivery countdowns, or schedules—without draining battery or relying on third-party cloud relays.
+PeekJson is built for developers, self-hosters, and power users who want real-time visibility into custom APIs, status endpoints, transit feeds, delivery countdowns, or schedules—without draining battery or relying on third-party cloud relays.
 
 KEY FEATURES
 • Public & Authenticated Endpoints: Connect public HTTPS JSON endpoints or authenticate securely using Bearer Tokens (`Authorization: Bearer`) or custom API Key headers (such as `X-API-Key`).
 • Responsive Home Screen Widgets: Pin multiple widgets, each mapped to its own feed. Automatically adapts between compact cards, 3-column data tables, and live chronometer countdowns.
 • Active Transit & Delivery Tracking: Start a time-bounded, user-initiated session with one-tap "Refresh Now" and "Stop Live" controls. On Android 16+, eligible sessions request promoted Live Update treatment.
 • Wearable Mirroring: Dedicated alert channel designed for smartbands and wearables (including Galaxy Fit), triggering only when payload data actually changes.
-• Built-In Offline Samples: Preview transit arrivals, live food delivery countdowns, daily meetings, and family location tables immediately out of the box.
+• Built-In Offline Samples: Preview transit arrivals, live food delivery countdowns, and daily meetings immediately out of the box.
 
 ENGINEERED FOR BATTERY LIFE
 • Configurable Sync Intervals: Choose Manual-only (zero background polling), 15 minutes, 30 minutes, 1 hour, 3 hours, or 6 hours.
@@ -52,4 +52,4 @@ PRIVACY & SECURITY FIRST
 - **Foreground Service Type:** `specialUse`
 - **Subtype Property:** `user_initiated_live_json_endpoint_monitor_and_countdown`
 - **Play Console Justification Text:**
-  > App Notify allows users to explicitly start a time-bounded active transit or food-delivery tracking session. The session displays a continuously visible ETA/countdown, refreshes its user-visible state, and ends automatically when the tracked activity completes. It is strictly initiated by the user, exposes prominent Refresh and Stop actions in both the notification and app, and does not use the foreground service for family locations, upcoming meetings, or arbitrary background JSON polling.
+  > PeekJson allows users to explicitly start a time-bounded active transit or food-delivery tracking session. The session displays a continuously visible ETA/countdown, refreshes its user-visible state, and ends automatically when the tracked activity completes. It is strictly initiated by the user, exposes prominent Refresh and Stop actions in both the notification and app, and does not use the foreground service for upcoming meetings or arbitrary background JSON polling.

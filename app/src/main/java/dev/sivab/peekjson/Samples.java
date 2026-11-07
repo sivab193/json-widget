@@ -1,20 +1,18 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 final class Samples {
     static final String ENDPOINT = "endpoint";
     static final String BUSES = "buses";
     static final String FOOD = "food";
     static final String EVENTS = "events";
-    static final String FAMILY = "family";
 
     static final String[] LABELS = {
             "Custom HTTPS JSON Endpoint (Public or Authenticated)",
             "Route 21 · Track Active Bus",
             "Food Delivery · Live Chronometer Countdown",
-            "Upcoming Events & Meetings",
-            "Family Locations · Widget-Only Table"
+            "Upcoming Events & Meetings"
     };
-    static final String[] IDS = { ENDPOINT, BUSES, FOOD, EVENTS, FAMILY };
+    static final String[] IDS = { ENDPOINT, BUSES, FOOD, EVENTS };
 
     static int position(String id) {
         for (int i = 0; i < IDS.length; i++) if (IDS[i].equals(id)) return i;
@@ -31,11 +29,7 @@ final class Samples {
             case EVENTS: return "{\"type\":\"events\",\"events\":[" +
                     "{\"title\":\"Product stand-up\",\"time\":\"9:30 AM\",\"location\":\"Zoom\"}," +
                     "{\"title\":\"Dentist appointment\",\"time\":\"1:15 PM\",\"location\":\"Carmel\"}," +
-                    "{\"title\":\"Dinner with family\",\"time\":\"6:30 PM\",\"location\":\"Home\"}]}";
-            case FAMILY: return "{\"type\":\"family_locations\",\"people\":[" +
-                    "{\"name\":\"Appa\",\"location\":\"Hosur\",\"updated\":\"Just now\"}," +
-                    "{\"name\":\"Amma\",\"location\":\"Madurai\",\"updated\":\"2 min ago\"}," +
-                    "{\"name\":\"Shuk\",\"location\":\"Coimbatore\",\"updated\":\"5 min ago\"}]}";
+                    "{\"title\":\"Dinner with friends\",\"time\":\"6:30 PM\",\"location\":\"Downtown\"}]}";
             default: return null;
         }
     }

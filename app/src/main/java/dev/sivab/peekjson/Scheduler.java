@@ -1,4 +1,4 @@
-package dev.sivab.appnotify;
+package dev.sivab.peekjson;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
