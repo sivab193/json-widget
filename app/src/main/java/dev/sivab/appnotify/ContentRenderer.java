@@ -91,6 +91,14 @@ final class ContentRenderer {
     static String notification(Context context, String formatted) {
         try {
             JSONObject root = new JSONObject(formatted);
+            if ("buses".equals(root.optString("type")) && Store.busDeadline(context) > 0) {
+                JSONObject first = root.getJSONArray("arrivals").getJSONObject(0);
+                long seconds = Math.max(0, (Store.busDeadline(context) - System.currentTimeMillis() + 999) / 1000);
+                String eta = seconds > 0 ? ((seconds + 59) / 60) + " min" : "Arriving now";
+                String vehicle = first.optString("vehicle");
+                return eta + " · Route " + root.optString("route") + " to " + first.optString("destination")
+                        + (vehicle.isEmpty() ? "" : " · " + vehicle);
+            }
             if ("food_delivery".equals(root.optString("type")) && Store.foodDeadline(context) > 0) {
                 long seconds = Math.max(0, (Store.foodDeadline(context) - System.currentTimeMillis() + 999) / 1000);
                 return (seconds / 60) + " min " + (seconds % 60) + " sec · " + root.optString("restaurant") + " · " + (seconds > 0 ? root.optString("status") : "Arrived");

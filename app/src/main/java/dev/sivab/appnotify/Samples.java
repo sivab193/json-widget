@@ -9,7 +9,7 @@ final class Samples {
 
     static final String[] LABELS = {
             "Custom HTTPS JSON Endpoint (Public or Authenticated)",
-            "Route 21 · Upcoming Transit Buses",
+            "Route 21 · Track Active Bus",
             "Food Delivery · Live Chronometer Countdown",
             "Upcoming Events & Meetings",
             "Family Locations · Widget-Only Table"
@@ -24,7 +24,7 @@ final class Samples {
     static String json(String id) {
         switch (id) {
             case BUSES: return "{\"type\":\"buses\",\"route\":\"21\",\"stop\":\"Central Station\",\"arrivals\":[" +
-                    "{\"destination\":\"Downtown\",\"minutes\":3,\"status\":\"On time\"}," +
+                    "{\"destination\":\"Downtown\",\"minutes\":8,\"status\":\"On time\",\"vehicle\":\"Bus 2107\"}," +
                     "{\"destination\":\"Downtown\",\"minutes\":12,\"status\":\"2 min late\"}," +
                     "{\"destination\":\"Downtown\",\"minutes\":24,\"status\":\"On time\"}]}";
             case FOOD: return "{\"type\":\"food_delivery\",\"restaurant\":\"Green Bowl Kitchen\",\"courier\":\"Maya\",\"minutes_left\":18,\"status\":\"On the way\"}";

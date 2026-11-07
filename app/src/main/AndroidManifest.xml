@@ -10,6 +10,8 @@
 
     <application
         android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/ic_app"
         android:roundIcon="@drawable/ic_app"
         android:label="@string/app_name"
@@ -43,7 +45,7 @@
             android:foregroundServiceType="specialUse">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="user_initiated_live_json_endpoint_monitor_and_countdown" />
+                android:value="user_initiated_time_bounded_active_transit_or_delivery_tracking" />
         </service>
 
         <receiver android:name=".DataWidget" android:exported="true">

@@ -13,14 +13,14 @@ Use the following metadata and declarations when submitting **App Notify** (`dev
 `Glanceable HTTPS JSON widgets & live notifications with API key auth & low battery`
 
 ### Full Description (Max 4000 characters)
-Turn any public or authenticated HTTPS JSON endpoint into glanceable information across your Android Home screen, Lock screen, and companion wearables.
+Turn public or authenticated HTTPS JSON endpoints into glanceable information across your Android Home screen, lock-screen notifications, and companion wearables.
 
 App Notify is built for developers, self-hosters, and power users who want real-time visibility into custom APIs, status endpoints, transit feeds, delivery countdowns, or schedules—without draining battery or relying on third-party cloud relays.
 
 KEY FEATURES
 • Public & Authenticated Endpoints: Connect public HTTPS JSON endpoints or authenticate securely using Bearer Tokens (`Authorization: Bearer`) or custom API Key headers (such as `X-API-Key`).
-• Responsive Home & Lock Screen Widgets: Pin multiple widgets, each mapped to its own feed. Automatically adapts between compact cards, 3-column data tables, and live chronometer countdowns.
-• Live Lock-Screen Updates: Start an on-demand Live Session with promoted ongoing notification support and one-tap "Refresh Now" or "Stop Live" controls right from the notification shade.
+• Responsive Home Screen Widgets: Pin multiple widgets, each mapped to its own feed. Automatically adapts between compact cards, 3-column data tables, and live chronometer countdowns.
+• Active Transit & Delivery Tracking: Start a time-bounded, user-initiated session with one-tap "Refresh Now" and "Stop Live" controls. On Android 16+, eligible sessions request promoted Live Update treatment.
 • Wearable Mirroring: Dedicated alert channel designed for smartbands and wearables (including Galaxy Fit), triggering only when payload data actually changes.
 • Built-In Offline Samples: Preview transit arrivals, live food delivery countdowns, daily meetings, and family location tables immediately out of the box.
 
@@ -52,4 +52,4 @@ PRIVACY & SECURITY FIRST
 - **Foreground Service Type:** `specialUse`
 - **Subtype Property:** `user_initiated_live_json_endpoint_monitor_and_countdown`
 - **Play Console Justification Text:**
-  > App Notify allows users to explicitly start a live monitoring session ("Apply & Sync Live") for a user-configured HTTPS JSON endpoint or live delivery countdown, displaying an ongoing promoted status notification on the lock screen and companion wearable. The foreground service is strictly user-initiated from the main activity when "Display Live Update on Lock screen & Galaxy Fit" is enabled, uses system chronometers and user-selected intervals to minimize battery usage, and provides a prominent "Stop Live" action button both inside the ongoing notification and inside the app UI to terminate the service immediately.
+  > App Notify allows users to explicitly start a time-bounded active transit or food-delivery tracking session. The session displays a continuously visible ETA/countdown, refreshes its user-visible state, and ends automatically when the tracked activity completes. It is strictly initiated by the user, exposes prominent Refresh and Stop actions in both the notification and app, and does not use the foreground service for family locations, upcoming meetings, or arbitrary background JSON polling.

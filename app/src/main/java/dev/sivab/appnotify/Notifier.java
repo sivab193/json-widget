@@ -67,6 +67,7 @@ final class Notifier {
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
         );
         String title = test ? "App Notify · Test Alert" : ContentRenderer.title(Store.text(context));
+        boolean liveEligible = !test && Store.supportsPromotedLiveUpdate(Store.source(context));
 
         Notification publicVersion = new Notification.Builder(context, CHANNEL)
                 .setSmallIcon(R.drawable.ic_app)
@@ -80,15 +81,15 @@ final class Notifier {
                 .setContentText(text)
                 .setStyle(new Notification.BigTextStyle().bigText(text))
                 .setContentIntent(open)
-                .setAutoCancel(test)
-                .setOngoing(!test)
+                .setAutoCancel(test || !liveEligible)
+                .setOngoing(liveEligible)
                 .setOnlyAlertOnce(true)
                 .setShowWhen(true)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setPublicVersion(publicVersion)
                 .setCategory(Notification.CATEGORY_STATUS);
 
-        if (!test) {
+        if (liveEligible) {
             builder.addAction(buildRefreshAction(context));
             builder.addAction(buildStopAction(context));
         }
@@ -98,7 +99,7 @@ final class Notifier {
                     .setUsesChronometer(true)
                     .setChronometerCountDown(true);
         }
-        if (!test && Build.VERSION.SDK_INT >= 36) {
+        if (liveEligible && Build.VERSION.SDK_INT >= 36) {
             applyPromotedOngoing(builder);
         }
         manager.notify(test ? 1002 : 1001, builder.build());
@@ -131,7 +132,7 @@ final class Notifier {
                     .setUsesChronometer(true)
                     .setChronometerCountDown(true);
         }
-        if (Build.VERSION.SDK_INT >= 36) {
+        if (Build.VERSION.SDK_INT >= 36 && Store.supportsPromotedLiveUpdate(Store.source(context))) {
             applyPromotedOngoing(builder);
         }
         return builder.build();
@@ -151,8 +152,25 @@ final class Notifier {
 
     static void cancelLive(Context context) {
         NotificationManager manager = context.getSystemService(NotificationManager.class);
-        if (manager != null) manager.cancel(1001);
+        if (manager != null) {
+            manager.cancel(1001);
+            int wearableId = Store.wearableNotificationId(context);
+            if (wearableId != 0) manager.cancel("wearable", wearableId);
+        }
         Store.setLiveActive(context, false);
+    }
+
+    static String promotionStatus(Context context) {
+        if (!Store.supportsPromotedLiveUpdate(Store.source(context))) {
+            return "Standard notification · Live promotion is reserved for active bus and delivery tracking";
+        }
+        if (Build.VERSION.SDK_INT < 36) {
+            return "Standard lock-screen notification · Promoted Live Updates require Android 16+";
+        }
+        NotificationManager manager = context.getSystemService(NotificationManager.class);
+        return manager != null && manager.canPostPromotedNotifications()
+                ? "Promoted Live Updates allowed by Android · Samsung Now Bar remains device-controlled"
+                : "Live Updates are disabled in system notification settings";
     }
 
     static void showWearableAlert(Context context, String title, String text) {

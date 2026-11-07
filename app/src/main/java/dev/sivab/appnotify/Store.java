@@ -156,6 +156,20 @@ final class Store {
         return prefs(c).getLong("food_deadline", 0L);
     }
 
+    static long busDeadline(Context c) {
+        return prefs(c).getLong("bus_deadline", 0L);
+    }
+
+    static boolean supportsPromotedLiveUpdate(String source) {
+        return Samples.BUSES.equals(source) || Samples.FOOD.equals(source);
+    }
+
+    static long liveDeadline(Context c) {
+        if (Samples.BUSES.equals(source(c))) return busDeadline(c);
+        if (Samples.FOOD.equals(source(c))) return foodDeadline(c);
+        return 0L;
+    }
+
     static int wearableNotificationId(Context c) {
         return prefs(c).getInt("wearable_notification_id", 0);
     }

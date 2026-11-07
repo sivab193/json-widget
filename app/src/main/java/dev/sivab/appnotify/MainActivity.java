@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
     private TextView authDiagnostic;
     private TextView batteryStatusSummary;
     private TextView liveBadge;
+    private TextView liveEligibility;
     private TextView authSecretLabel;
     private LinearLayout endpointContainer;
     private LinearLayout authHeaderContainer;
@@ -49,6 +50,7 @@ public class MainActivity extends Activity {
     private CheckBox showWidget;
     private CheckBox showNotification;
     private boolean sendTestAfterPermission;
+    private boolean applyAfterPermission;
 
     @Override
     protected void onCreate(Bundle state) {
@@ -63,6 +65,7 @@ public class MainActivity extends Activity {
         authDiagnostic = findViewById(R.id.authDiagnostic);
         batteryStatusSummary = findViewById(R.id.batteryStatusSummary);
         liveBadge = findViewById(R.id.liveBadge);
+        liveEligibility = findViewById(R.id.liveEligibility);
         authSecretLabel = findViewById(R.id.authSecretLabel);
         endpointContainer = findViewById(R.id.endpointContainer);
         authHeaderContainer = findViewById(R.id.authHeaderContainer);
@@ -155,7 +158,6 @@ public class MainActivity extends Activity {
         findViewById(R.id.privacyInfoBtn).setOnClickListener(v -> showPrivacyAndPlayStoreDialog());
 
         Notifier.ensureChannel(this);
-        requestNotifications();
         Scheduler.schedule(this);
         refreshDiagnosticsUI();
     }
@@ -164,12 +166,6 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         refreshDiagnosticsUI();
-    }
-
-    private void requestNotifications() {
-        if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 10);
-        }
     }
 
     private void sendTestNotification() {
@@ -206,9 +202,19 @@ public class MainActivity extends Activity {
                 Notifier.showWearableAlert(this, ContentRenderer.title(stored), ContentRenderer.notification(this, stored));
             }
         }
+        if (requestCode == 10 && applyAfterPermission) {
+            applyAfterPermission = false;
+            if (results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) saveAndRefresh();
+        }
     }
 
     private void saveAndRefresh() {
+        if (showNotification.isChecked() && Build.VERSION.SDK_INT >= 33
+                && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            applyAfterPermission = true;
+            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 10);
+            return;
+        }
         String selectedSource = Samples.IDS[source.getSelectedItemPosition()];
         String endpointUrl = url.getText().toString().trim();
         String selectedAuthMode = Store.AUTH_IDS[authMode.getSelectedItemPosition()];
@@ -255,6 +261,9 @@ public class MainActivity extends Activity {
         if (Samples.FOOD.equals(selectedSource)) {
             editor.putLong("food_deadline", System.currentTimeMillis() + 18L * 60L * 1000L);
         }
+        if (Samples.BUSES.equals(selectedSource)) {
+            editor.putLong("bus_deadline", System.currentTimeMillis() + 8L * 60L * 1000L);
+        }
         editor.apply();
 
         // Reschedule battery-aware background alarm with the updated interval
@@ -270,12 +279,16 @@ public class MainActivity extends Activity {
             } else {
                 content.setText(text);
                 Intent live = new Intent(this, LiveUpdateService.class);
-                if (showNotification.isChecked()) {
+                if (showNotification.isChecked() && Store.supportsPromotedLiveUpdate(selectedSource)) {
                     Store.setLiveActive(this, true);
                     startForegroundService(live);
                 } else {
                     stopService(live);
-                    Notifier.cancelLive(this);
+                    if (showNotification.isChecked()) {
+                        Notifier.show(this, ContentRenderer.notification(this, text), false);
+                    } else {
+                        Notifier.cancelLive(this);
+                    }
                 }
             }
             refreshDiagnosticsUI();
@@ -319,6 +332,9 @@ public class MainActivity extends Activity {
         boolean allowNotify = !Samples.FAMILY.equals(selected);
         showNotification.setEnabled(allowNotify);
         showNotification.setChecked(allowNotify && Store.prefs(this).getBoolean("notify_" + selected, true));
+        showNotification.setText(Store.supportsPromotedLiveUpdate(selected)
+                ? "Track as a Live Update on lock screen and supported system surfaces"
+                : "Send a standard lock-screen and wearable notification");
         refreshDiagnosticsUI();
     }
 
@@ -358,6 +374,7 @@ public class MainActivity extends Activity {
 
         status.setText(Store.lastHttpStatus(this) + " · Updated: " + Store.updated(this));
         authDiagnostic.setText(Store.authSummary(this) + " · Sync: " + Store.scheduleSummary(this));
+        liveEligibility.setText(Notifier.promotionStatus(this));
         updateBatteryTelemetryPreview(refreshInterval.getSelectedItemPosition());
     }
 

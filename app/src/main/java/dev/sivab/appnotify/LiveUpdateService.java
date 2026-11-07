@@ -37,6 +37,10 @@ public class LiveUpdateService extends Service {
             stopLive();
             return;
         }
+        if (!Store.supportsPromotedLiveUpdate(Store.source(this))) {
+            stopLive();
+            return;
+        }
         String formatted = Store.text(this);
         String message = ContentRenderer.notification(this, formatted);
         startForeground(1001, Notifier.liveNotification(this));
@@ -47,16 +51,15 @@ public class LiveUpdateService extends Service {
             Notifier.showWearableAlert(this, ContentRenderer.title(formatted), message);
         }
 
-        // Auto-stop live session once food delivery countdown expires
-        if (Samples.FOOD.equals(Store.source(this))) {
-            long remainingMs = Store.foodDeadline(this) - System.currentTimeMillis();
+        // Active transit and delivery sessions have an explicit end and update the wearable once a minute.
+        if (Samples.FOOD.equals(Store.source(this)) || Samples.BUSES.equals(Store.source(this))) {
+            long remainingMs = Store.liveDeadline(this) - System.currentTimeMillis();
             if (remainingMs <= 0) {
                 handler.postDelayed(this::stopLive, 5000L);
                 return;
             }
-            // System Chronometer renders second-by-second countdown natively without waking the app.
-            // Schedule next check only when countdown finishes or after 5 minutes for wearable sync.
-            long nextCheck = Math.min(remainingMs + 1000L, 5L * 60L * 1000L);
+            // Chronometer handles delivery seconds; this minute tick refreshes ETA text and the wearable.
+            long nextCheck = Math.min(remainingMs + 1000L, 60L * 1000L);
             handler.postDelayed(tick, nextCheck);
             return;
         }
@@ -96,8 +99,8 @@ public class LiveUpdateService extends Service {
 
     private void stopLive() {
         handler.removeCallbacks(tick);
-        Store.setLiveActive(this, false);
         stopForeground(STOP_FOREGROUND_REMOVE);
+        Notifier.cancelLive(this);
         stopSelf();
     }
 

@@ -281,9 +281,18 @@
                 android:id="@+id/showNotification"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:text="Display Live Update on Lock screen &amp; Galaxy Fit"
+                android:text="Track as a Live Update on lock screen and supported system surfaces"
                 android:textColor="@color/navy"
                 android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/liveEligibility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Checking Live Update availability…"
+                android:textColor="@color/muted"
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -353,7 +362,7 @@
                     android:layout_marginStart="6dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_secondary"
-                    android:text="Now Bar / Channels"
+                    android:text="Live Update Settings"
                     android:textAllCaps="false"
                     android:textColor="@color/navy"
                     android:textSize="12sp" />
